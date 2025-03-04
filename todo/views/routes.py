@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from todo.models import db
 from todo.models.todo import Todo
-from datetime import datetime
+from datetime import datetime, timedelta
  
 api = Blueprint('api', __name__, url_prefix='/api/v1') 
 EXPECTED_KEYS = {'id', 'title', 'description', 'completed', 'deadline_at', 'created_at', 'updated_at'}
@@ -24,11 +24,13 @@ def health():
 @api.route('/todos', methods=['GET'])
 def get_todos():
     """Return the list of todo items"""
-    complete = request.args.get('completed', type=bool)
-    deadline = request.args.get('deadline_at', type=int)
-    today = datetime.now()
+    complete = request.args.get('completed', type=bool)  # if '/api/v1/todos?completed=true' is provided in API request
+    deadlineWindow = request.args.get('window', type=int) # if '/api/v1/todos?window=5' is provided in API request
+    
     if complete is not None:
-        todos = Todo.query.filter_by(completed=complete).all() 
+        todos = Todo.query.filter_by(completed=complete).all()
+    elif deadlineWindow is not None: 
+        todos = Todo.query.filter(Todo.deadline_at < datetime.now() + timedelta(days=deadlineWindow))
     else:     
         todos = Todo.query.all()
     """
