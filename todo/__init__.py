@@ -1,16 +1,20 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-    """Always check which python we're executing.
-    Make sure its not pointing to conda or Homebrew
-    But a new virtual (poetry) environment that I've made
-    """
-def create_app():
+    
+# Always check which python we're executing.
+# Make sure its not pointing to conda or Homebrew
+# But a new virtual (poetry) environment that I've made
+
+def create_app(config_overrides=None):
     app = Flask(__name__)
     # URI -> Uniform Resource Identifier
     # In production, this URI will define the credentials and 
     # Hostname of database server.
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.splite"
+    if config_overrides:
+        app.config.update(config_overrides)
+
     # Load the models
     from todo.models import db
     from todo.models.todo import Todo

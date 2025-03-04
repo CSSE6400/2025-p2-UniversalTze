@@ -1,5 +1,6 @@
 import datetime
 from . import db
+from collections import OrderedDict
 
 class Todo(db.Model): 
     __tablename__  = 'todos'
@@ -27,17 +28,18 @@ class Todo(db.Model):
                     onupdate=datetime.datetime.utcnow)
 
 
-# This is a helper method to convert the model to a dictionary.
-def to_dict(self):
-    return {
-    'id': self.id,
-    'title': self.title,
-    'description': self.description,
-    'completed': self.completed,
-    'deadline_at': self.deadline_at.isoformat() if self.deadline_at else None,
-    'created_at': self.created_at.isoformat() if self.created_at else None,
-    'updated_at': self.updated_at.isoformat() if self.updated_at else None,
-    }
-def __repr__(self):
-    return f'<Todo {self.id} {self.title}>'
-    
+    # This is a helper method to convert the model to a dictionary.
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'completed': self.completed,
+            'deadline_at': self.deadline_at.isoformat() if self.deadline_at else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            }
+
+    def __repr__(self):
+        return f'<Todo {self.id} {self.title}>'
+        
