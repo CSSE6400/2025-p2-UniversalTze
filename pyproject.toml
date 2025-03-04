@@ -2,7 +2,7 @@
 name = "2024-p2"
 version = "0.1.0"
 description = ""
-authors = []
+authors = ["Tze Kheng Goh"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
