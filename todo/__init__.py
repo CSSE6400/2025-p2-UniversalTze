@@ -8,6 +8,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 def create_app(config_overrides=None):
     app = Flask(__name__)
+    # Part of Flask's feaute to aplabetically sort JSON keys.
+    # JSON does not sort any keys
+    # Command below is to stop it from alphabetically sorting.
+    # app.json.sort_keys = False 
+
     # URI -> Uniform Resource Identifier
     # In production, this URI will define the credentials and 
     # Hostname of database server.
